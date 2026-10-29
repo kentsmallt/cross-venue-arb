@@ -1,0 +1,66 @@
+# Observe-only defaults. Copy to config.toml and edit if you want.
+# `python -m cross_venue_arb scan` works without this file.
+
+mode = "paper"
+# Must be a real boolean. Anything else is rejected. true does not send orders.
+live_trading_enabled = false
+
+symbols = ["BTC", "ETH", "SOL"]
+interval_seconds = 10
+min_net_bps = "0"
+fee_buffer_bps = "1"
+slippage_bps = "1"
+# Added when one leg is quoted in USDT and the other in USD/USDC.
+stablecoin_buffer_bps = "1"
+funding_horizon_hours = "1"
+min_top_notional_usd = "0"
+# Mids farther apart than this are flagged suspect and are not opportunities.
+max_mid_divergence_bps = "500"
+fee_role = "taker"
+require_funding = true
+log_path = "logs/opportunities.jsonl"
+output_format = "table"
+request_timeout_seconds = 12
+once = false
+top = 0
+
+# Optional explicit venue symbols. Canonical keys are uppercased.
+# [symbol_map.hyperliquid]
+# PEPE = "kPEPE"
+# [symbol_map.binance_um]
+# PEPE = "1000PEPEUSDT"
+
+[venues.hyperliquid]
+enabled = true
+taker_fee_bps = "4.5"
+maker_fee_bps = "1.5"
+funding_interval_hours = "1"
+base_url = "https://api.hyperliquid.xyz"
+
+[venues.binance_um]
+enabled = true
+taker_fee_bps = "5"
+maker_fee_bps = "2"
+funding_interval_hours = "8"
+base_url = "https://fapi.binance.com"
+
+# Off by default. Spot vs perp is a basis trade; borrow is not modeled.
+[venues.binance_spot]
+enabled = false
+taker_fee_bps = "10"
+maker_fee_bps = "10"
+base_url = "https://data-api.binance.vision"
+
+[venues.backpack]
+enabled = true
+taker_fee_bps = "5"
+maker_fee_bps = "2"
+funding_interval_hours = "1"
+base_url = "https://api.backpack.exchange"
+
+[venues.okx]
+enabled = true
+taker_fee_bps = "5"
+maker_fee_bps = "2"
+funding_interval_hours = "8"
+base_url = "https://www.okx.com"
